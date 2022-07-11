@@ -16,7 +16,7 @@ app.config['DEBUG'] = True
 
 uri = os.getenv("DATABASE_URL")
 if uri.startswith("postgres://"):
-    uri = uri.replace("postgres://", "postgresql", 1)
+    uri = uri.replace("postgres://", "postgresql://", 1)
 
 #DATABASE_URL - 1st to run
 #sqlite - default if the 1st did not run
