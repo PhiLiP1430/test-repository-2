@@ -11,8 +11,10 @@ from resources.store import Store, StoreList
 
 app = Flask(__name__)
 
-#app.config['DEBUG'] = True
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
+app.config['DEBUG'] = True
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///data.db')
+#DATABASE_URL - 1st to run
+#sqlite - default if the 1st did not run
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['PROPAGATE_EXCEPTIONS'] = True
 app.secret_key = 'phil'
@@ -45,8 +47,13 @@ api.add_resource(Item,'/item/<string:name>') #http://127.0.0:5000/item/<string:n
 if __name__ == '__main__':
     from db import db
     db.init_app(app)
-    app.run(port=5000, debug=True)
+
+    if app.config['DEBUG']:
+        @app.before_first_request
+        def create_tables():
+            db.create_all()
     
+    app.run(port=5000, debug=True)
     #debug=True is a Flask feature to help us debug
     #if we run the app.py, python assigns a special name to the file and the namin is always '__main__'
 
