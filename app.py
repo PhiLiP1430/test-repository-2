@@ -12,14 +12,15 @@ from resources.store import Store, StoreList
 app = Flask(__name__)
 
 app.config['DEBUG'] = True
-#app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///data.db')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///data.db')
 
-uri = os.getenv("DATABASE_URL")
-if uri.startswith("postgres://"):
-    uri = uri.replace("postgres://", "postgresql://", 1)
+#uri = os.getenv("DATABASE_URL")
+#if uri.startswith("postgres://"):
+#    uri = uri.replace("postgres://", "postgresql://", 1)
 
 #DATABASE_URL - 1st to run
 #sqlite - default if the 1st did not run
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 #app.config['PROPAGATE_EXCEPTIONS'] = True
 app.secret_key = 'phil'
