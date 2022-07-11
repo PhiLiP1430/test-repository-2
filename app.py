@@ -12,11 +12,8 @@ from resources.store import Store, StoreList
 app = Flask(__name__)
 
 app.config['DEBUG'] = True
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///data.db')
+#app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///data.db')
 
-#uri = os.getenv("DATABASE_URL")
-#if uri.startswith("postgres://"):
-#    uri = uri.replace("postgres://", "postgresql://", 1)
 
 #DATABASE_URL - 1st to run
 #sqlite - default if the 1st did not run
@@ -52,6 +49,11 @@ api.add_resource(ItemList,'/items')
 api.add_resource(Item,'/item/<string:name>') #http://127.0.0:5000/item/<string:name>
 
 if __name__ == '__main__':
+    uri = os.getenv("DATABASE_URL")
+    if uri.startswith("postgres://"):
+        uri = uri.replace("postgres://", "postgresql://", 1)
+
+
     from db import db
     db.init_app(app)
 
