@@ -52,8 +52,7 @@ if __name__ == '__main__':
     uri = os.getenv("DATABASE_URL")
     if uri.startswith("postgres://"):
         uri = uri.replace("postgres://", "postgresql://", 1)
-
-
+        
     from db import db
     db.init_app(app)
 
